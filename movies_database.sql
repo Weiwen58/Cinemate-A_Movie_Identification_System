@@ -66,7 +66,7 @@ CREATE TABLE details_spokenLanguage (
 
 CREATE TABLE commercial (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    popularity DECIMAL(5,10),
+    popularity DECIMAL(10,5),
     budget INT,
     revenue INT,
     status VARCHAR(20),
