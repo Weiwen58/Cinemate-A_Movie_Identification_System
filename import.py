@@ -20,51 +20,12 @@ for c in dic_columns:
     df[c] = df[c].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) and x != '[]' else [])
 
 
-# movie table
+# movies table
 # movie_columns = ["id", "imdb_id", "title", "language", "isAdult", "releaseDate", "runtimeMinutes"]
 # movie_table = df[movie_columns]
 
-# movie_table.to_sql(name="movie", con=engine, if_exists="append", index=False)
+# movie_table.to_sql(name="movies", con=engine, if_exists="append", index=False)
 
-
-# ratings table
-# ratings_columns = ["id", "averageRating", "numVotes"]
-# ratings_table = df[ratings_columns].rename(columns={"id": "movieId"})
-
-# ratings_table.to_sql(name="ratings", con=engine, if_exists="append", index=False)
-
-
-# genres table
-# unique_genres = set()
-# for genres_list in df["genres"]:
-#   for genre in genres_list:
-#       unique_genres.add((genre.get("id"), genre.get("name")))
-
-# for id, name in unique_genres:
-#   query = "INSERT IGNORE INTO genres (id, name) VALUES (%s, %s);"
-#   mycursor.execute(query, (id, name))
-
-
-# movie_genre table
-# for _, row in df.iterrows():
-#   movie_id = row["id"]
-#   for genre in row["genres"]:
-#       genre_id = genre.get("id")
-#       query = "INSERT INTO movie_genres (movieId, genreId) VALUES (%s, %s);"
-#       mycursor.execute(query, (movie_id, genre_id))
-
-# mydb.commit()
-
-
-# spokenLanguage table
-# unique_languages = set()
-# for l_list in df["spoken_languages"]:
-#   for l in l_list:
-#       unique_languages.add((l.get("iso_639_1"), l.get("name")))
-
-# for language_code, name in unique_languages:
-#   query = "INSERT IGNORE INTO spokenLanguage (languageCode, name) VALUES (%s, %s);"
-#   mycursor.execute(query, (language_code, name))
 
 
 # productionCompanies table
@@ -80,6 +41,63 @@ for c in dic_columns:
 # mydb.commit()
 
 
+
+# produce table (relationship)
+# for _, row in df.iterrows():
+#   movie_id = row["id"]
+#   for company in row["production_companies"]:
+#     company_id = company.get("id")
+#     query = "INSERT IGNORE INTO produce (movieId, productionCompanyId) VALUES (%s, %s);"
+#     mycursor.execute(query, (movie_id, company_id))
+
+# mydb.commit()
+
+
+
+# ratings table
+# ratings_columns = ["id", "averageRating", "numVotes"]
+# ratings_table = df[ratings_columns].rename(columns={"id": "movieId"})
+
+# ratings_table.to_sql(name="ratings", con=engine, if_exists="append", index=False)
+
+
+
+# genres table
+# unique_genres = set()
+# for genres_list in df["genres"]:
+#   for genre in genres_list:
+#       unique_genres.add((genre.get("id"), genre.get("name")))
+
+# for id, name in unique_genres:
+#   query = "INSERT IGNORE INTO genres (id, name) VALUES (%s, %s);"
+#   mycursor.execute(query, (id, name))
+
+
+
+# movie_genre table
+# for _, row in df.iterrows():
+#   movie_id = row["id"]
+#   for genre in row["genres"]:
+#       genre_id = genre.get("id")
+#       query = "INSERT INTO movie_genres (movieId, genreId) VALUES (%s, %s);"
+#       mycursor.execute(query, (movie_id, genre_id))
+
+# mydb.commit()
+
+
+
+# spokenLanguage table
+# unique_languages = set()
+# for l_list in df["spoken_languages"]:
+#   for l in l_list:
+#       unique_languages.add((l.get("iso_639_1"), l.get("name")))
+
+# for language_code, name in unique_languages:
+#   query = "INSERT IGNORE INTO spokenLanguage (languageCode, name) VALUES (%s, %s);"
+#   mycursor.execute(query, (language_code, name))
+
+
+
 # productionCountries table
 # unique_countries = set()
 # for countries_list in df["production_countries"]:
@@ -93,6 +111,7 @@ for c in dic_columns:
 # mydb.commit()
 
 
+
 # commercial table
 # commercial_columns = ["popularity", "budget", "revenue", "status", "id"]
 # commercial_table = df[commercial_columns].rename(columns={"id": "movieId"})
@@ -101,21 +120,14 @@ for c in dic_columns:
 # commercial_table.to_sql(name="commercial", con=engine, if_exists="append", index=False)
 
 
-# commercial_productionCompanies and commercial_productionCountries table
+
+# commercial_productionCountries table
 # fetch_query = "SELECT id FROM movies_metadata.commercial WHERE movieId = %s;"
 
 # for _, row in df.iterrows():
 #   movie_id = row["id"]
 #   mycursor.execute(fetch_query, (movie_id,))
 #   commercial_id = mycursor.fetchone()
-  
-#   query = "INSERT IGNORE INTO commercial_productionCompanies (commercialId, productionCompanyId) VALUES (%s, %s);"
-#   for company in row["production_companies"]:
-#     company_id = company.get("id")
-#     mycursor.execute(query, (commercial_id[0], company_id))
-
-# mydb.commit()
-  
 #   query = "INSERT IGNORE INTO commercial_productionCountries (commercialId, productionCountryCode) VALUES (%s, %s);"
 #   for country in row["production_countries"]:
 #     country_code = country.get("iso_3166_1")
@@ -124,12 +136,14 @@ for c in dic_columns:
 # mydb.commit()
 
 
+
 # details table
 # df = pd.read_csv("./new_basics.csv")
 # details_columns = ["original_title", "overview", "tagline", "startYear", "id"]
 # details_table = df[details_columns].rename(columns={"id": "movieId", "original_title": "originalTitle"})
 
 # details_table.to_sql(name="details", con=engine, if_exists="append", index=False)
+
 
 
 # details_spokenLanguage table
@@ -148,6 +162,7 @@ for c in dic_columns:
 # mydb.commit()
 
 
+
 # keywords table
 # keywords_df = pd.read_csv("./data/keywords.csv")
 # dic_columns = ["keywords"]
@@ -164,6 +179,8 @@ for c in dic_columns:
 
 # mydb.commit()
 
+
+
 # movie_keywords table
 # for _, row in df.iterrows():
 #   movie_id = row["id"]
@@ -173,6 +190,7 @@ for c in dic_columns:
 #     mycursor.execute(query, (movie_id, keyword_id))
 
 # mydb.commit()
+
 
 
 # actor and has_cast table
@@ -195,6 +213,7 @@ for c in dic_columns:
 # mydb.commit()
 
 
+
 # crew table
 # unique_crews = set()
 # for crews_list in df["crew"]:
@@ -206,6 +225,7 @@ for c in dic_columns:
 #   mycursor.execute(query, (id, job, department, credit_id, gender, name))
 
 # mydb.commit()
+
 
 
 # has_crew table
