@@ -24,12 +24,12 @@ CREATE TABLE movie_genres (
     PRIMARY KEY (movieId, genreId)
 );
 
-*CREATE TABLE keywords (
+CREATE TABLE keywords (
     id INT PRIMARY KEY,
     name VARCHAR(255)
 );
 
-*CREATE TABLE movie_keywords (
+CREATE TABLE movie_keywords (
     movieId INT,
     keywordId INT,
     FOREIGN KEY (movieId) REFERENCES movie(id),
@@ -45,7 +45,7 @@ CREATE TABLE movies_spokenLanguage (
     movieId INT,
     languageCode VARCHAR(20),
     FOREIGN KEY (languageCode) REFERENCES spokenLanguage(languageCode),
-    FOREIGN KEY (movieId) REFERENCES movie(movieId),
+    FOREIGN KEY (movieId) REFERENCES movie(id),
     PRIMARY KEY (movieId, languageCode)
 );
 
