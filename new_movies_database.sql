@@ -33,7 +33,8 @@ CREATE TABLE movie_keywords (
     movieId INT,
     keywordId INT,
     FOREIGN KEY (movieId) REFERENCES movie(id),
-    FOREIGN KEY (keywordId) REFERENCES keywords(id)
+    FOREIGN KEY (keywordId) REFERENCES keywords(id),
+    PRIMARY KEY (movieId, keywordId)
 );
 
 CREATE TABLE spokenLanguage (
