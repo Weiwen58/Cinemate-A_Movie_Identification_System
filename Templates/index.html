@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <title>Cinemate</title>
+  </head>
+
+  <body>
+
+    <div class="search-container">
+      <h2>Cinemate - Your Go-To Movie Search Engine</h2>
+
+      <div class="actor-input">
+        <label for="actor1">Actor 1:</label>
+        <input list="actors" name="actor1" placeholder="Select an actor">
+        <datalist id="actors">
+          {% for actor in actors %}
+          <option value="{{ actor }}">
+          {% endfor %}
+        </datalist>
+
+        <label for="character1">Character 1:</label>
+        <input list="characters" name="character1" placeholder="Select a character name">
+        <datalist id="characters">
+          {% for character in characters %}
+          <option value="{{ character }}">
+          {% endfor %}
+        </datalist>
+        <br>
+        <label for="actor2">Actor 2:</label>
+        <input list="actors" name="actor2" placeholder="Select an actor">
+        <datalist id="actors">
+          {% for actor in actors %}
+          <option value="{{ actor }}">
+          {% endfor %}
+        </datalist>
+
+        <label for="character2">Character 2:</label>
+        <input list="characters" name="character2" placeholder="Select a character name">
+        <datalist id="characters">
+          {% for character in characters %}
+          <option value="{{ character }}">
+          {% endfor %}
+        </datalist>
+        <br>
+        <label for="actor3">Actor 3:</label>
+        <input list="actors" name="actor3" placeholder="Select an actor">
+        <datalist id="actors">
+          {% for actor in actors %}
+          <option value="{{ actor }}">
+          {% endfor %}
+        </datalist>
+
+        <label for="character3">Character 3:</label>
+        <input list="characters" name="character3" placeholder="Select a character name">
+        <datalist id="characters">
+          {% for character in characters %}
+          <option value="{{ character }}">
+          {% endfor %}
+        </datalist>
+        <br>
+        <label for="actor4">Actor 4:</label>
+        <input list="actors" name="actor4" placeholder="Select an actor">
+        <datalist id="actors">
+          {% for actor in actors %}
+          <option value="{{ actor }}">
+          {% endfor %}
+        </datalist>
+
+        <label for="character4">Character 4:</label>
+        <input list="characters" name="character4" placeholder="Select a character name">
+        <datalist id="characters">
+          {% for character in characters %}
+          <option value="{{ character }}">
+          {% endfor %}
+        </datalist>
+        <br>
+        <label for="actor5">Actor 5:</label>
+        <input list="actors" name="actor5" placeholder="Select an actor">
+        <datalist id="actors">
+          {% for actor in actors %}
+          <option value="{{ actor }}">
+          {% endfor %}
+        </datalist>
+        
+        <label for="character5">Character 5:</label>
+        <input list="characters" name="character5" placeholder="Select a character name">
+        <datalist id="characters">
+          {% for character in characters %}
+          <option value="{{ character }}">
+          {% endfor %}
+        </datalist>
+
+
+      </div>
+      <br>
+      <br>
+
+      <div class="genre-input">
+        <label for="genre1">Genre 1:</label>
+        <input list="genres" name="genre1" placeholder="Select a Genre">
+        <datalist id="genres">
+          {% for genre in genres %}
+          <option value="{{ genre }}">
+          {% endfor %}
+        </datalist>
+      </div>
+      <div class="genre-input">
+        <label for="genre2">Genre 2:</label>
+        <input list="genres" name="genre2" placeholder="Select a Genre">
+        <datalist id="genres">
+          {% for genre in genres %}
+          <option value="{{ genre }}">
+          {% endfor %}
+        </datalist>
+      </div>
+      <div class="genre-input">
+        <label for="genre3">Genre 3:</label>
+        <input list="genres" name="genre3" placeholder="Select a Genre">
+        <datalist id="genres">
+          {% for genre in genres %}
+          <option value="{{ genre }}">
+          {% endfor %}
+        </datalist>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="production_company-input">
+        <label for="production_company1">Production Company:</label>
+        <input list="production_companies" name="production_company1" placeholder="Select a Production Company">
+        <datalist id="production_companies">
+          {% for pc in production_companies %}
+          <option value="{{ pc }}">
+          {% endfor %}
+        </datalist>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="director-input">
+        <label for="director1">Movie Director:</label>
+        <input list="director" name="director1" placeholder="Select a Director">
+        <datalist id="director">
+          {% for direc in director %}
+          <option value="{{ director }}">
+          {% endfor %}
+        </datalist>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="year-of-watch-input">
+        <label for="year1">Year You Watched the Movie:</label>
+        <input type="text" id="year" placeholder="Enter a year (YYYY)">
+      </div>
+
+      <br>
+      <br>
+
+      <div class="language-input">
+        <label for="language1">Language:</label>
+        <input list="language" name="language1" placeholder="Select a Language">
+        <datalist id="language">
+          {% for lang in language %}
+          <option value="{{ language }}">
+          {% endfor %}
+        </datalist>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="movie-plot-input">
+        <label for="plot1">Movie Plot:</label>
+        <textarea id="plot" placeholder="Enter What You Remember From the Movie"></textarea>
+      </div>
+
+      <br>
+      <br>
+
+      <button class="search-button" onclick="searchMovies()">Search Movies</button>
+
+    </div>
+
+    <script>
+
+      
+    </script>
+    <script src="../script.js" defer></script>
+  </body>
+
+</html>
