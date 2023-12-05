@@ -13,11 +13,11 @@ mycursor = mydb.cursor()
 engine = create_engine('mysql+mysqlconnector://sqluser:password@localhost/movies_metadata')
 
 # main dataset
-df = pd.read_csv("./data/new_movies_metadata.csv")
-dic_columns = ["genres", "production_companies", "production_countries", "spoken_languages",
-               "keywords", "cast", "crew"]
-for c in dic_columns:
-    df[c] = df[c].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) and x != '[]' else [])
+# df = pd.read_csv("./data/new_movies_metadata.csv")
+# dic_columns = ["genres", "production_companies", "production_countries", "spoken_languages",
+#                "keywords", "cast", "crew"]
+# for c in dic_columns:
+#     df[c] = df[c].apply(lambda x: ast.literal_eval(x) if pd.notnull(x) and x != '[]' else [])
 
 
 # movies table
@@ -238,6 +238,25 @@ for c in dic_columns:
 
 # mydb.commit()
 
+from nltk.tokenize import word_tokenize
+
+mycursor.execute("SELECT id, overview FROM movies")
+overview_data = mycursor.fetchall()
+
+movie_ids = []
+tokenized_overviews = []
+for overview in overview_data:
+  if overview[1]:
+    movie_ids.append(overview[0])
+    tokens = word_tokenize(overview[1])
+    tokenized_overviews.append(tokens)
+
+query = "INSERT INTO overviewtokens (movieId, token) VALUES (%s, %s)"
+
+for i in range(len(movie_ids)):
+  movie_id = movie_ids[i]
+  for token in tokenized_overviews[i]:
+    mycursor.execute(query, (movie_id, token))
 
 mycursor.close()
 mydb.close()
