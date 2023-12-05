@@ -147,8 +147,8 @@
         <label for="director1">Movie Director:</label>
         <input list="director" name="director1" placeholder="Select a Director">
         <datalist id="director">
-          {% for direc in director %}
-          <option value="{{ director }}">
+          {% for d in director %}
+          <option value="{{ d }}">
           {% endfor %}
         </datalist>
       </div>
@@ -168,8 +168,8 @@
         <label for="language1">Language:</label>
         <input list="language" name="language1" placeholder="Select a Language">
         <datalist id="language">
-          {% for lang in language %}
-          <option value="{{ language }}">
+          {% for l in language %}
+          <option value="{{ l }}">
           {% endfor %}
         </datalist>
       </div>
