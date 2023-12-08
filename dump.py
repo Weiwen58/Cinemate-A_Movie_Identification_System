@@ -5,7 +5,7 @@ from sklearn.preprocessing import normalize
 
 mydb = mysql.connector.connect(
   host="localhost",
-  user="sqluser",
+  user="root",
   password="password",
   database="movies_metadata"
 )
