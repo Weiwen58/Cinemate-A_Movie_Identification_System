@@ -17,7 +17,7 @@ mycursor = mydb.cursor()
 
 
 
-web_query = string_cleaning.clean_string_ret_string()#here will be the user input, the function will return a string
+web_query = string_cleaning.clean_string_ret_string("Toys")#here will be the user input, the function will return a string
 
 with open('movie_ids.pkl', 'rb') as movie_ids_file:
     all_movie_ids = pickle.load(movie_ids_file)
@@ -52,13 +52,12 @@ similar_movie_ids = [filtered_movie_ids[idx] for idx in similar_movies_indices]
 query = "SELECT title FROM movie WHERE id = %s"
 
 titles = []
-for movie_id in similar_movie_ids[:6]:
+for movie_id in similar_movie_ids:
     mycursor.execute(query, (movie_id, ))
     result = mycursor.fetchone()
     if result:
         titles.append(result[0])
 
-print(titles)
 
 mycursor.close()
 mydb.close()
