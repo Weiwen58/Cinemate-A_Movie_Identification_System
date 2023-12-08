@@ -3,7 +3,7 @@ import pickle
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
+import string_cleaning
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -13,13 +13,10 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-def clean_keywords(input):
-    lowercase_input = input.lower()
-    words_separated = lowercase_input.split()
-    result = ' '.join(words_separated)
-    return result
 
-web_query = clean_keywords("barcelona spain")
+
+
+web_query = string_cleaning. clean_string_ret_string()#here will be the user input
 
 with open('movie_ids.pkl', 'rb') as movie_ids_file:
     movie_ids = pickle.load(movie_ids_file)
