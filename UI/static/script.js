@@ -1,3 +1,5 @@
+// The input fields' sizes are adjusted 
+// according to their respective placeholders' length
 window.onload = function() {
   const inputs = document.querySelectorAll('input');
   
@@ -11,6 +13,10 @@ window.onload = function() {
 };
 
 function validateInputs() {
+  let dataToSend = {};
+  let errorFlag = false;
+  let errorMsg = "";
+  
   const inputs = document.querySelectorAll('input[list]');
   inputs.forEach(input => {
     const datalistId = input.getAttribute('list');
@@ -22,10 +28,21 @@ function validateInputs() {
       const options = Array.from(datalist.options).map(option => option.value);
       if (!options.includes(enteredValue)) {
         alert(`Please select a valid option for '${input.name}' from the list.`);
-        isValid = false;
+        errorFlag = true;
+        errorMsg = input.name;
+      } else {
+        // Store validated value in dataToSend object
+        dataToSend[input.name] = enteredValue;
       }
+    } else {
+        // Store validated value in dataToSend object
+        dataToSend[input.name] = enteredValue;
     }
   });
+
+  if(errorFlag){
+    return {flag2: false, msg: errorMsg, dataToSend};
+  }
 
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -40,11 +57,27 @@ function validateInputs() {
       const year = parseInt(enteredValue, 10);
       if (year < 1874 || year > currentYear) {
         alert('Cinemate supports movies released between 1874 and 2017 (both inclusive) \nPlease enter a date between the above mentioned dates :)');
+        return {flag: false, msg:"year", dataToSend};
+      } else {
+        dataToSend['year'] = enteredValue;
       }
     } else {
       alert('Please enter a valid 4-digit year.');
+      return {flag2: false, dataToSend};
     }
+  } else {
+      dataToSend['year'] = '';
   }
+  
+  // Validate the single textarea element
+  const textarea = document.querySelector('textarea');
+  const textareaValue = textarea.value.trim();
+  const textareaName = textarea.getAttribute('name');
+  
+  // Store validated textarea value in dataToSend
+  dataToSend[textareaName] = textareaValue;
+
+  return {flag2: true, msg: "tmam", dataToSend};
 };
 
 function validateFields() {
@@ -59,26 +92,26 @@ function validateFields() {
 
   if (!isValid) {
     alert('Please fill in at least one input field.');
-    return;
+    return false;
   }
+  return true;
 };
 
 function searchMovies() {
-    validateInputs();
-    validateFields();
+    let flag1 = validateFields();
+
+    if (!flag1){
+      return;
+    }
+
+    const {flag2, msg, dataToSend} = validateInputs();
+
+    if (!flag2){
+      return;
+    }
+
     // Get all actor-input elements
     const actorInputs = document.querySelectorAll('.actor-input');
-
-    // Extract actors and characters from each actor-input
-    const dataToSend = Array.from(actorInputs).map(actorInput => {
-      const actorSelect = actorInput.querySelector('input[name="actor[]"]');
-      const characterSelect = actorInput.querySelector('input[name="character[]"]');
-
-      return {
-        actor: actorSelect.value.trim(),
-        character: characterSelect.value.trim()
-      };
-    });
 
     // Send the data to the backend using Fetch API
     fetch('/your_backend_endpoint', {
@@ -88,12 +121,13 @@ function searchMovies() {
       },
       body: JSON.stringify(dataToSend)
     })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the server
-        console.log('Response from server:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-}
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response from the server if needed
+      console.log('Response from server:', data);
+    })
+    .catch(error => {
+      // Handle errors
+      console.error('Error:', error);
+    });
+};
