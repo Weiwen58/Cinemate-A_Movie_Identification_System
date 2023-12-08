@@ -4,10 +4,11 @@ from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import string_cleaning
+from sklearn.preprocessing import normalize
 
 mydb = mysql.connector.connect(
   host="localhost",
-  user="sqluser",
+  user="root",
   password="password",
   database="movies_metadata"
 )
@@ -30,9 +31,10 @@ with open('tfidf_vectorizer.pkl', 'rb') as vectorizer_file:
 
 # Transform the query to a TF-IDF vector
 query_vector = tfidf_vectorizer.transform([web_query])
+query_vector_normalized = normalize(query_vector, norm='l2', axis=1)
 
 # Calculate cosine similarity between query and all movie overviews
-cosine_similarities = cosine_similarity(query_vector, tfidf_matrix)
+cosine_similarities = cosine_similarity(query_vector_normalized, tfidf_matrix)
 
 # Get the indices of movies sorted by their similarity to the query
 similar_movies_indices = cosine_similarities.argsort()[0][::-1]
