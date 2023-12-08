@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+    <link rel="stylesheet" href="../static/styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>Cinemate</title>
   </head>
@@ -189,6 +190,17 @@
       <button class="search-button" onclick="searchMovies()">Search Movies</button>
 
     </div>
+
+    <div class="recommendations-container">
+      <h2>Your Movie Recommendations</h2>
+      <ul class="movie-list">
+          <li class="movie-item">Movie Name 1</li>
+          <li class="movie-item">Movie Name 2</li>
+          <li class="movie-item">Movie Name 3</li>
+          <!-- Add more items as needed -->
+      </ul>
+  </div>
+  
 
     <script>
 
