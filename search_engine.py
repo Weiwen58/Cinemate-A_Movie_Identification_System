@@ -33,22 +33,15 @@ with open('tfidf_vectorizer.pkl', 'rb') as vectorizer_file:
 query_vector = tfidf_vectorizer.transform([web_query])
 
 #new code
-filtered_movies_ids = []#just a place holder till we get the filtered movies
+filtered_movies_ids = [862,4,5,6,2]#just a place holder till we get the filtered movies
 filtered_indices = [i for i, movie_id in enumerate(all_movie_ids) if movie_id in filtered_movies_ids]
 filtered_tfidf_matrix = tfidf_matrix[filtered_indices, :]
 filtered_movie_ids = [all_movie_ids[i] for i in filtered_indices]
 
-# Fit and transform the filtered movie overviews to TF-IDF vectors
-tfidf_matrix_filtered = tfidf_vectorizer.fit_transform(filtered_tfidf_matrix)
 # Normalize the filtered TF-IDF matrix
-tfidf_matrix_normalized_filtered = normalize(tfidf_matrix_filtered, norm='l2', axis=1)
+tfidf_matrix_normalized_filtered = normalize(filtered_tfidf_matrix, norm='l2', axis=1)
 cosine_similarities = cosine_similarity(query_vector, tfidf_matrix_normalized_filtered)
 ####
-
-# Calculate cosine similarity between query and all movie overviews
-# cosine_similarities = cosine_similarity(query_vector, tfidf_matrix) #commented and if testing goes well will be deleted
-
-
 
 # Get the indices of movies sorted by their similarity to the query
 similar_movies_indices = cosine_similarities.argsort()[0][::-1]
