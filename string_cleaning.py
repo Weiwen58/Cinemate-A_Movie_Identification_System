@@ -26,6 +26,9 @@ def verb_stemming(text_list):
     return stemmed_words
 
 
+
+#These are the functions that will clean string
+
 def clean_string_ret_string(input): #returns a string
     clean_input = input.lower()
     clean_input = remove_punctuation(clean_input)

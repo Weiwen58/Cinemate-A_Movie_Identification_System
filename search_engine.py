@@ -16,7 +16,7 @@ mycursor = mydb.cursor()
 
 
 
-web_query = string_cleaning. clean_string_ret_string()#here will be the user input
+web_query = string_cleaning. clean_string_ret_string()#here will be the user input, the function will return a string
 
 with open('movie_ids.pkl', 'rb') as movie_ids_file:
     movie_ids = pickle.load(movie_ids_file)
