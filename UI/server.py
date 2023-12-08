@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import mysql.connector
 from sqlalchemy import create_engine
 
@@ -12,6 +12,13 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 engine = create_engine("mysql+mysqlconnector://root:password@localhost/movies_metadata")
 
+@app.route('/your_backend_endpoint', methods=['POST'])
+def handle_data():
+    received_data = request.json
+    # Process received_data here
+
+    # Return a response if needed
+    return received_data
 
 @app.route("/")
 def index():
@@ -19,27 +26,27 @@ def index():
 
     try:
         with mycursor as cursor:
-            query = "SELECT DISTINCT A.name FROM actors A"
+            query = "SELECT DISTINCT A.name FROM actors A ORDER BY A.name"
             cursor.execute(query)
             actors = [row[0] for row in cursor.fetchall()]
 
-            query = "SELECT DISTINCT HC.character FROM has_cast HC"
+            query = "SELECT DISTINCT HC.character FROM has_cast HC ORDER BY HC.character"
             cursor.execute(query)
             characters = [row[0] for row in cursor.fetchall()]
             
-            query = "SELECT DISTINCT PC.name FROM productioncompanies PC"
+            query = "SELECT DISTINCT PC.name FROM productioncompanies PC ORDER BY PC.name"
             cursor.execute(query)
             production_companies = [row[0] for row in cursor.fetchall()]
             
-            query = "SELECT DISTINCT G.name FROM genres G"
+            query = "SELECT DISTINCT G.name FROM genres G ORDER BY G.name"
             cursor.execute(query)
             genres = [row[0] for row in cursor.fetchall()]
 
-            query = "SELECT DISTINCT D.name FROM director D"
+            query = "SELECT DISTINCT D.name FROM director D ORDER BY D.name"
             cursor.execute(query)
             director = [row[0] for row in cursor.fetchall()]
 
-            query = "SELECT DISTINCT L.name FROM spokenlanguage L"
+            query = "SELECT DISTINCT L.name FROM spokenlanguage L ORDER BY L.name"
             cursor.execute(query)
             language = [row[0] for row in cursor.fetchall()]
 
