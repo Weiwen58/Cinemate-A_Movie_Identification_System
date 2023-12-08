@@ -97,6 +97,29 @@ function validateFields() {
   return true;
 };
 
+function displayMovies() {
+  fetch('/get_movies') // Update this URL with your actual Flask endpoint
+      .then(response => response.json())
+      .then(data => {
+          // Assuming 'data' is an array of movie objects received from the server
+          const moviesList = document.querySelector('.movie-list');
+
+          // Clear the previous content in the list
+          moviesList.innerHTML = '';
+
+          // Iterate through the movie data and create list items to display movies
+          data.forEach(movie => {
+              const listItem = document.createElement('li');
+              listItem.textContent = `${movie.title} - ${movie.year}`; // Update this with your movie properties
+              listItem.classList.add('movie-item'); // Add a class for styling if needed
+              moviesList.appendChild(listItem);
+          });
+      })
+      .catch(error => {
+          console.error('Error fetching movies:', error);
+      });
+};
+
 function searchMovies() {
     let flag1 = validateFields();
 
@@ -125,6 +148,8 @@ function searchMovies() {
     .then(data => {
       // Handle the response from the server if needed
       console.log('Response from server:', data);
+
+      displayMovies();
     })
     .catch(error => {
       // Handle errors
