@@ -19,8 +19,8 @@ CREATE TABLE genres (
 CREATE TABLE movie_genres (
     movieId INT,
     genreId INT,
-    FOREIGN KEY (movieId) REFERENCES movie(id),
-    FOREIGN KEY (genreId) REFERENCES genres(id),
+    FOREIGN KEY (movieId) REFERENCES movie(id) ON DELETE CASCADE,
+    FOREIGN KEY (genreId) REFERENCES genres(id) ON DELETE CASCADE,
     PRIMARY KEY (movieId, genreId)
 );
 
@@ -32,8 +32,8 @@ CREATE TABLE keywords (
 CREATE TABLE movie_keywords (
     movieId INT,
     keywordId INT,
-    FOREIGN KEY (movieId) REFERENCES movie(id),
-    FOREIGN KEY (keywordId) REFERENCES keywords(id),
+    FOREIGN KEY (movieId) REFERENCES movie(id) ON DELETE CASCADE,
+    FOREIGN KEY (keywordId) REFERENCES keywords(id) ON DELETE CASCADE,
     PRIMARY KEY (movieId, keywordId)
 );
 
@@ -45,8 +45,8 @@ CREATE TABLE spokenLanguage (
 CREATE TABLE movies_spokenLanguage (
     movieId INT,
     languageCode VARCHAR(20),
-    FOREIGN KEY (languageCode) REFERENCES spokenLanguage(languageCode),
-    FOREIGN KEY (movieId) REFERENCES movie(id),
+    FOREIGN KEY (languageCode) REFERENCES spokenLanguage(languageCode) ON DELETE CASCADE,
+    FOREIGN KEY (movieId) REFERENCES movie(id) ON DELETE CASCADE,
     PRIMARY KEY (movieId, languageCode)
 );
 
@@ -58,8 +58,8 @@ CREATE TABLE productionCompanies (
 CREATE TABLE produce (
     movieId INT,
     pcId INT,
-    FOREIGN KEY (movieId) REFERENCES movie(id),
-    FOREIGN KEY (pcId) REFERENCES productionCompanies(id),
+    FOREIGN KEY (movieId) REFERENCES movie(id) ON DELETE CASCADE,
+    FOREIGN KEY (pcId) REFERENCES productionCompanies(id) ON DELETE CASCADE,
     PRIMARY KEY (movieId, pcId)
 );
 
@@ -73,8 +73,8 @@ CREATE TABLE has_cast (
     gender VARCHAR(20),
     actorId INT,
     movieId INT,
-    FOREIGN KEY (actorId) REFERENCES actors(id),
-    FOREIGN KEY (movieId) REFERENCES movie(id),
+    FOREIGN KEY (actorId) REFERENCES actors(id) ON DELETE CASCADE,
+    FOREIGN KEY (movieId) REFERENCES movie(id) ON DELETE CASCADE,
     PRIMARY KEY (actorId, movieId)
 );
 
@@ -86,9 +86,22 @@ CREATE TABLE director (
 CREATE TABLE directs (
     directorId INT,
     movieId INT UNIQUE,
-    FOREIGN KEY (directorId) REFERENCES director(id),
-    FOREIGN KEY (movieId) REFERENCES movie(id),
+    FOREIGN KEY (directorId) REFERENCES director(id) ON DELETE CASCADE,
+    FOREIGN KEY (movieId) REFERENCES movie(id) ON DELETE CASCADE,
     PRIMARY KEY (directorId, movieId)
 );
+
+DELETE FROM movies_metadata.movie 
+WHERE YEAR(releaseDate) >= 2018;
+
+CREATE TABLE overviewTokens (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    movieId int,
+    token varchar(64),
+    FOREIGN KEY (movieId) REFERENCES movie (id) ON DELETE CASCADE
+);
+
+-- UPDATE overviewTokens
+-- SET token = REGEXP_REPLACE(token, '[[:punct:]]', '');
 
 SHOW TABLES;
