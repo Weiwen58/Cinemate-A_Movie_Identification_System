@@ -1,7 +1,7 @@
 import mysql.connector
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
-
+from sklearn.preprocessing import normalize
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -24,6 +24,8 @@ tfidf_vectorizer = TfidfVectorizer()
 
 # Fit and transform the movie overviews to TF-IDF vectors
 tfidf_matrix = tfidf_vectorizer.fit_transform(tokenized_overviews)
+# Normalize the TF-IDF matrix
+tfidf_matrix_normalized = normalize(tfidf_matrix, norm='l2', axis=1)
 
 with open('movie_ids.pkl', 'wb') as movie_ids_file:
     pickle.dump(movie_ids, movie_ids_file)
