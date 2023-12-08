@@ -33,7 +33,7 @@ with open('tfidf_vectorizer.pkl', 'rb') as vectorizer_file:
 query_vector = tfidf_vectorizer.transform([web_query])
 
 #new code
-filtered_movies_ids = [862,4,5,6,2]#just a place holder till we get the filtered movies
+filtered_movies_ids = []#just a place holder till we get the filtered movies
 filtered_indices = [i for i, movie_id in enumerate(all_movie_ids) if movie_id in filtered_movies_ids]
 filtered_tfidf_matrix = tfidf_matrix[filtered_indices, :]
 filtered_movie_ids = [all_movie_ids[i] for i in filtered_indices]
