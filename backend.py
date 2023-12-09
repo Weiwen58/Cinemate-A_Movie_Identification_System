@@ -1,10 +1,9 @@
-def compute_movies(received_object):
-    import mysql.connector
-    from sqlalchemy import create_engine
-    import pickle
-    from sklearn.preprocessing import normalize
-    from sklearn.metrics.pairwise import cosine_similarity
+import mysql.connector
+import pickle
+from sklearn.preprocessing import normalize
+from sklearn.metrics.pairwise import cosine_similarity
 
+def compute_movies(received_object):
     mydb = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -12,9 +11,10 @@ def compute_movies(received_object):
     database="movies_metadata"
     )
     mycursor = mydb.cursor()
-    engine = create_engine('mysql+mysqlconnector://sqluser:password@localhost/movies_metadata')
     query=""
     final_result = []
+    #test case
+    received_object= {"actor1":"" , "character1": "","actor2":"" , "character2": "","actor3":"" , "character3": "","actor4":"" , "character4": "","actor5":"" , "character5": "","production_company1":"","genre1":"","genre2":"","genre3":"","director1":"","year":"","overview":"andy buys a new toy and has a story with woody"}
     
     #Actors and characters
     for i in range (1,6):
@@ -119,7 +119,7 @@ def compute_movies(received_object):
         similar_movies_indices = [idx for idx in similar_movies_indices if cosine_similarities[0][idx] > min_similarity_threshold] # at least 10% similar
         similar_movie_ids = [filtered_movie_ids[idx] for idx in similar_movies_indices if cosine_similarities[0][idx] > max_similarity_threshold]
          
-        while len(similar_movie_ids) < 1 and max_similarity_threshold > 0.01:
+        while len(similar_movie_ids) < 3 and max_similarity_threshold > 0.01:
             similar_movie_ids = [filtered_movie_ids[idx] for idx in similar_movies_indices if cosine_similarities[0][idx] > max_similarity_threshold]
             max_similarity_threshold -= 0.01
 
@@ -137,4 +137,8 @@ def compute_movies(received_object):
         
     mycursor.close()
     mydb.close()
-    return final_result[:11]
+    print(final_result)
+    return final_result[:10]
+
+
+compute_movies("")
