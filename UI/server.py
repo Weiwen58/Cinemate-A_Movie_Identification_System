@@ -21,15 +21,6 @@ def receiver_user_input():
     movies = [{"title": movie} for movie in movies_list]
     return jsonify(movies)
 
-# @app.route('/get_movies')
-# def get_movies(movies_list):
-#     # Format the movies_list into a list of dictionaries
-#     movies = [{"title": movie} for movie in movies_list]
-
-#     return jsonify(movies)
-
-
-
 @app.route("/")
 def index():
     # Connect to the database
@@ -56,15 +47,10 @@ def index():
             cursor.execute(query)
             director = [row[0] for row in cursor.fetchall()]
 
-            query = "SELECT DISTINCT L.name FROM spokenlanguage L ORDER BY L.name"
-            cursor.execute(query)
-            language = [row[0] for row in cursor.fetchall()]
-
     finally:
         mycursor.close()
 
-    return render_template("index.html", actors=actors, characters=characters, production_companies = production_companies,genres = genres, director = director, language = language)
-
+    return render_template("index.html", actors=actors, characters=characters, production_companies = production_companies,genres = genres, director = director)
 
 if __name__ == "__main__":
     app.run(debug=True)
