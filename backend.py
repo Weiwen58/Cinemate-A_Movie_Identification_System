@@ -81,7 +81,7 @@ def compute_movies(received_object):
     if user_query != '':
         if filtered_result == []:
             mycursor.execute("SELECT M.id From Movie M")
-            filtered_movies_ids = mycursor.fetchall()
+            filtered_movies_ids = [i[0] for i in mycursor.fetchall()]
         else:  
             filtered_movies_ids = [i[0] for i in filtered_result]#ids of the movies resulted from the above filtering
         
@@ -117,13 +117,12 @@ def compute_movies(received_object):
         #Initialize a maximum similarity threshold
         max_similarity_threshold = 0.99
         similar_movies_indices = [idx for idx in similar_movies_indices if cosine_similarities[0][idx] > min_similarity_threshold] # at least 10% similar
-
+        similar_movie_ids = [filtered_movie_ids[idx] for idx in similar_movies_indices if cosine_similarities[0][idx] > max_similarity_threshold]
+         
         while len(similar_movie_ids) < 1 and max_similarity_threshold > 0.01:
             similar_movie_ids = [filtered_movie_ids[idx] for idx in similar_movies_indices if cosine_similarities[0][idx] > max_similarity_threshold]
             max_similarity_threshold -= 0.01
 
-        # Get movie IDs sorted by similarity to the query
-        similar_movie_ids = [filtered_movie_ids[idx] for idx in similar_movies_indices]
 
         query = "SELECT title FROM movie WHERE id = %s"
 
@@ -135,4 +134,7 @@ def compute_movies(received_object):
         final_result = titles
     else:
         final_result=filtered_result
+        
+    mycursor.close()
+    mydb.close()
     return final_result[:11]
