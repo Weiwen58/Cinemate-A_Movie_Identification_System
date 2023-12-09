@@ -91,17 +91,9 @@ CREATE TABLE directs (
     PRIMARY KEY (directorId, movieId)
 );
 
-DELETE FROM movies_metadata.movie 
-WHERE YEAR(releaseDate) >= 2018;
-
 CREATE TABLE overviewTokens (
     id int PRIMARY KEY AUTO_INCREMENT,
     movieId int,
     token varchar(64),
     FOREIGN KEY (movieId) REFERENCES movie (id) ON DELETE CASCADE
 );
-
--- UPDATE overviewTokens
--- SET token = REGEXP_REPLACE(token, '[[:punct:]]', '');
-
-SHOW TABLES;
