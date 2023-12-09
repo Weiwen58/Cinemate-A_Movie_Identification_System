@@ -97,29 +97,42 @@ function validateFields() {
   return true;
 };
 
-function displayMovies() {
-  fetch('/get_movies') // Update this URL with your actual Flask endpoint
-      .then(response => response.json())
-      .then(data => {
-          // Assuming 'data' is an array of movie objects received from the server
-          const moviesList = document.querySelector('.movie-list');
+// function displayMovies(data) {
+//   fetch('/get_movies') // Update this URL with your actual Flask endpoint
+//       .then(response => response.json())
+//       .then(data => {
+//           // Assuming 'data' is an array of movie objects received from the server
+//           const moviesList = document.querySelector('.movie-list');
 
-          // Clear the previous content in the list
-          moviesList.innerHTML = '';
+//           console.log(data);
 
-          // Iterate through the movie data and create list items to display movies
-          data.forEach(movie => {
-              const listItem = document.createElement('li');
-              listItem.textContent = `${movie.title} - ${movie.year}`; // Update this with your movie properties
-              listItem.classList.add('movie-item'); // Add a class for styling if needed
-              moviesList.appendChild(listItem);
-          });
-      })
-      .catch(error => {
-          console.error('Error fetching movies:', error);
-      });
-};
+//           // Clear the previous content in the list
+//           moviesList.innerHTML = '';
 
+//           // Iterate through the movie data and create list items to display movies
+//           data.forEach(movie => {
+//               const listItem = document.createElement('li');
+//               listItem.textContent = `${movie.title}`; // Update this with your movie properties
+//               listItem.classList.add('movie-item'); // Add a class for styling if needed
+//               moviesList.appendChild(listItem);
+//           });
+//       })
+//       .catch(error => {
+//           console.error('Error fetching movies:', error);
+//       });
+// };
+
+function displayMovies(data) {
+  const moviesList = document.querySelector('.movie-list');
+  moviesList.innerHTML = '';
+
+  data.forEach(movie => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${movie.title}`;
+    listItem.classList.add('movie-item');
+    moviesList.appendChild(listItem);
+  });
+}
 function searchMovies() {
     let flag1 = validateFields();
 
@@ -133,9 +146,6 @@ function searchMovies() {
       return;
     }
 
-    // Get all actor-input elements
-    const actorInputs = document.querySelectorAll('.actor-input');
-
     // Send the data to the backend using Fetch API
     fetch('/your_backend_endpoint', {
       method: 'POST',
@@ -146,13 +156,10 @@ function searchMovies() {
     })
     .then(response => response.json())
     .then(data => {
-      // Handle the response from the server if needed
       console.log('Response from server:', data);
-
-      displayMovies();
+      displayMovies(data);
     })
     .catch(error => {
-      // Handle errors
       console.error('Error:', error);
     });
-};
+}

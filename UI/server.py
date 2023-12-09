@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import mysql.connector
 from sqlalchemy import create_engine
+from backend import compute_movies
+
 
 app = Flask(__name__)
 
@@ -13,12 +15,20 @@ mycursor = mydb.cursor()
 engine = create_engine("mysql+mysqlconnector://root:password@localhost/movies_metadata")
 
 @app.route('/your_backend_endpoint', methods=['POST'])
-def handle_data():
+def receiver_user_input():
     received_data = request.json
-    # Process received_data here
-    
-    # Return a response if needed
-    return received_data
+    movies_list = compute_movies(received_data)  # Assuming compute_movies() creates a list of movie strings
+    movies = [{"title": movie} for movie in movies_list]
+    return jsonify(movies)
+
+# @app.route('/get_movies')
+# def get_movies(movies_list):
+#     # Format the movies_list into a list of dictionaries
+#     movies = [{"title": movie} for movie in movies_list]
+
+#     return jsonify(movies)
+
+
 
 @app.route("/")
 def index():
