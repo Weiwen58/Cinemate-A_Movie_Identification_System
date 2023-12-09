@@ -16,7 +16,7 @@ engine = create_engine("mysql+mysqlconnector://root:password@localhost/movies_me
 def handle_data():
     received_data = request.json
     # Process received_data here
-
+    
     # Return a response if needed
     return received_data
 
