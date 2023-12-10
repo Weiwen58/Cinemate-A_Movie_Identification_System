@@ -4,8 +4,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>Cinemate</title>
   </head>
@@ -16,118 +15,40 @@
       <h2>Cinemate - Your Go-To Movie Search Engine</h2>
 
       <div class="actor-input">
-        <label for="actor1">Actor 1:</label>
-        <input list="actors" name="actor1" placeholder="Select an actor">
-        <datalist id="actors">
-          {% for actor in actors %}
-          <option value="{{ actor }}">
-          {% endfor %}
-        </datalist>
-
-        <label for="character1">Character 1:</label>
-        <input list="characters" name="character1" placeholder="Select a character name">
-        <datalist id="characters">
-          {% for character in characters %}
-          <option value="{{ character }}">
-          {% endfor %}
-        </datalist>
-        <br>
-        <label for="actor2">Actor 2:</label>
-        <input list="actors" name="actor2" placeholder="Select an actor">
-        <datalist id="actors">
-          {% for actor in actors %}
-          <option value="{{ actor }}">
-          {% endfor %}
-        </datalist>
-
-        <label for="character2">Character 2:</label>
-        <input list="characters" name="character2" placeholder="Select a character name">
-        <datalist id="characters">
-          {% for character in characters %}
-          <option value="{{ character }}">
-          {% endfor %}
-        </datalist>
-        <br>
-        <label for="actor3">Actor 3:</label>
-        <input list="actors" name="actor3" placeholder="Select an actor">
-        <datalist id="actors">
-          {% for actor in actors %}
-          <option value="{{ actor }}">
-          {% endfor %}
-        </datalist>
-
-        <label for="character3">Character 3:</label>
-        <input list="characters" name="character3" placeholder="Select a character name">
-        <datalist id="characters">
-          {% for character in characters %}
-          <option value="{{ character }}">
-          {% endfor %}
-        </datalist>
-        <br>
-        <label for="actor4">Actor 4:</label>
-        <input list="actors" name="actor4" placeholder="Select an actor">
-        <datalist id="actors">
-          {% for actor in actors %}
-          <option value="{{ actor }}">
-          {% endfor %}
-        </datalist>
-
-        <label for="character4">Character 4:</label>
-        <input list="characters" name="character4" placeholder="Select a character name">
-        <datalist id="characters">
-          {% for character in characters %}
-          <option value="{{ character }}">
-          {% endfor %}
-        </datalist>
-        <br>
-        <label for="actor5">Actor 5:</label>
-        <input list="actors" name="actor5" placeholder="Select an actor">
-        <datalist id="actors">
-          {% for actor in actors %}
-          <option value="{{ actor }}">
-          {% endfor %}
-        </datalist>
-        
-        <label for="character5">Character 5:</label>
-        <input list="characters" name="character5" placeholder="Select a character name">
-        <datalist id="characters">
-          {% for character in characters %}
-          <option value="{{ character }}">
-          {% endfor %}
-        </datalist>
-
-
+        {% for i in range(1, 6) %}
+            <label for="actor{{ i }}">Actor {{ i }}:</label>
+            <input list="actors{{ i }}" name="actor{{ i }}" placeholder="Select an actor">
+            <datalist id="actors{{ i }}">
+                {% for actor in actors %}
+                    <option value="{{ actor }}">
+                {% endfor %}
+            </datalist>
+    
+            <label for="character{{ i }}">Character {{ i }}:</label>
+            <input list="characters{{ i }}" name="character{{ i }}" placeholder="Select a character name">
+            <datalist id="characters{{ i }}">
+              {% for character in characters %}
+                <option value="{{ character }}">
+              {% endfor %}
+            </datalist>
+            <br>
+        {% endfor %}
       </div>
+    
       <br>
       <br>
 
+      {% for i in range(1, 4) %}
       <div class="genre-input">
-        <label for="genre1">Genre 1:</label>
-        <input list="genres" name="genre1" placeholder="Select a Genre">
-        <datalist id="genres">
-          {% for genre in genres %}
-          <option value="{{ genre }}">
-          {% endfor %}
-        </datalist>
+          <label for="genre{{ i }}">Genre {{ i }}:</label>
+          <input list="genres{{ i }}" name="genre{{ i }}" placeholder="Select a Genre">
+          <datalist id="genres{{ i }}">
+            {% for genre in genres %}
+            <option value="{{ genre }}">
+            {% endfor %}
+          </datalist>
       </div>
-      <div class="genre-input">
-        <label for="genre2">Genre 2:</label>
-        <input list="genres" name="genre2" placeholder="Select a Genre">
-        <datalist id="genres">
-          {% for genre in genres %}
-          <option value="{{ genre }}">
-          {% endfor %}
-        </datalist>
-      </div>
-      <div class="genre-input">
-        <label for="genre3">Genre 3:</label>
-        <input list="genres" name="genre3" placeholder="Select a Genre">
-        <datalist id="genres">
-          {% for genre in genres %}
-          <option value="{{ genre }}">
-          {% endfor %}
-        </datalist>
-      </div>
+      {% endfor %}
 
       <br>
       <br>
@@ -190,7 +111,7 @@
 
       
     </script>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="../static/script.js"></script>
   </body>
 
 </html>
