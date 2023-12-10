@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import mysql.connector
-from sqlalchemy import create_engine
+# from sqlalchemy import create_engine
 from backend import compute_movies
 
 
@@ -12,7 +12,7 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-engine = create_engine("mysql+mysqlconnector://root:password@localhost/movies_metadata")
+# engine = create_engine("mysql+mysqlconnector://root:password@localhost/movies_metadata")
 
 @app.route('/your_backend_endpoint', methods=['POST'])
 def receiver_user_input():
