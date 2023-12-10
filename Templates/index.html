@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>Cinemate</title>
+  </head>
+
+  <body>
+
+    <div class="search-container">
+      <h2>Cinemate - Your Go-To Movie Search Engine</h2>
+
+      <div class="actor-input">
+        {% for i in range(1, 6) %}
+            <label for="actor{{ i }}">Actor {{ i }}:</label>
+            <input list="actors{{ i }}" name="actor{{ i }}" placeholder="Select an actor">
+            <datalist id="actors{{ i }}">
+                {% for actor in actors %}
+                    <option value="{{ actor }}">
+                {% endfor %}
+            </datalist>
+    
+            <label for="character{{ i }}">Character {{ i }}:</label>
+            <input list="characters{{ i }}" name="character{{ i }}" placeholder="Select a character name">
+            <datalist id="characters{{ i }}">
+              {% for character in characters %}
+                <option value="{{ character }}">
+              {% endfor %}
+            </datalist>
+            <br>
+        {% endfor %}
+      </div>
+    
+      <br>
+      <br>
+
+      {% for i in range(1, 4) %}
+      <div class="genre-input">
+          <label for="genre{{ i }}">Genre {{ i }}:</label>
+          <input list="genres{{ i }}" name="genre{{ i }}" placeholder="Select a Genre">
+          <datalist id="genres{{ i }}">
+            {% for genre in genres %}
+            <option value="{{ genre }}">
+            {% endfor %}
+          </datalist>
+      </div>
+      {% endfor %}
+
+      <br>
+      <br>
+
+      <div class="production_company-input">
+        <label for="production_company1">Production Company:</label>
+        <input list="production_companies" name="production_company1" placeholder="Select a Production Company">
+        <datalist id="production_companies">
+          {% for pc in production_companies %}
+          <option value="{{ pc }}">
+          {% endfor %}
+        </datalist>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="director-input">
+        <label for="director1">Movie Director:</label>
+        <input list="director" name="director1" placeholder="Select a Director">
+        <datalist id="director">
+          {% for d in director %}
+          <option value="{{ d }}">
+          {% endfor %}
+        </datalist>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="year-of-watch-input">
+        <label for="year1">Year You Watched the Movie:</label>
+        <input type="text" id="year" placeholder="Enter a year (YYYY)">
+      </div>
+
+      <br>
+      <br>
+
+      <div class="movie-overview-input">
+        <label for="overview1">Movie Plot:</label>
+        <textarea id="overview" name="overview" placeholder="Enter What You Remember From the Movie"></textarea>
+      </div>
+
+      <br>
+      <br>
+
+      <button class="search-button" onclick="searchMovies()">Search Movies</button>
+
+    </div>
+
+    <div class="recommendations-container">
+      <h2>Your Movie Recommendations</h2>
+      <ul class="movie-list">
+          
+      </ul>
+  </div>
+  
+
+    <script>
+
+      
+    </script>
+    <script src="../static/script.js"></script>
+  </body>
+
+</html>
