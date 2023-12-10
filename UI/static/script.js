@@ -12,6 +12,34 @@ window.onload = function() {
   });
 };
 
+$(document).ready(function() {
+  $('input[name^="actor"]').change(function() {
+      var actorName = $(this).val();
+      var characterField = $(this).attr('name').replace('actor', 'characters');
+
+      $.ajax({
+          type: "GET",
+          url: "/get_characters", // Replace with the actual endpoint to retrieve characters by actor ID
+          data: {
+              actor_name: actorName
+          },
+          success: function(response) {
+              var characters = response.characters;
+              var characterDatalist = $('#' + characterField); // Use ID selector instead of name selector
+
+              // Clear existing options before appending new ones
+              characterDatalist.empty();
+
+              characters.forEach(function(character) {
+                  characterDatalist.append($('<option>', {
+                      value: character
+                  }));
+              });
+          }
+      });
+  });
+});
+
 function validateInputs() {
   let dataToSend = {};
   let errorFlag = false;
@@ -96,31 +124,6 @@ function validateFields() {
   }
   return true;
 };
-
-// function displayMovies(data) {
-//   fetch('/get_movies') // Update this URL with your actual Flask endpoint
-//       .then(response => response.json())
-//       .then(data => {
-//           // Assuming 'data' is an array of movie objects received from the server
-//           const moviesList = document.querySelector('.movie-list');
-
-//           console.log(data);
-
-//           // Clear the previous content in the list
-//           moviesList.innerHTML = '';
-
-//           // Iterate through the movie data and create list items to display movies
-//           data.forEach(movie => {
-//               const listItem = document.createElement('li');
-//               listItem.textContent = `${movie.title}`; // Update this with your movie properties
-//               listItem.classList.add('movie-item'); // Add a class for styling if needed
-//               moviesList.appendChild(listItem);
-//           });
-//       })
-//       .catch(error => {
-//           console.error('Error fetching movies:', error);
-//       });
-// };
 
 function displayMovies(data) {
   const moviesList = document.querySelector('.movie-list');
