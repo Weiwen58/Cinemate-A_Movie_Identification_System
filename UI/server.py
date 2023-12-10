@@ -21,6 +21,35 @@ def receiver_user_input():
     movies = [{"title": movie} for movie in movies_list]
     return jsonify(movies)
 
+@app.route("/get_characters", methods=["GET"])
+def get_characters():
+    try:
+        actor_name = request.args.get('actor_name')
+        # Establish your database connection
+        mydb = mysql.connector.connect(
+            host="localhost", user="root", password="password", database="movies_metadata"
+        )
+        mycursor = mydb.cursor()
+
+        characters_query = """SELECT `character` 
+                            FROM has_cast HC
+                            JOIN actors A ON A.id = HC.actorId
+                            WHERE A.name = %s
+                            """
+
+        mycursor.execute(characters_query, (actor_name,))
+        characters = [row[0] for row in mycursor.fetchall()]
+
+        # Close database connection
+        mycursor.close()
+        mydb.close()
+
+        return jsonify({"characters": characters})
+
+    except Exception as e:
+        print(f"Error: {e}")  # Log the error to understand the issue
+        return jsonify({"characters": []})  # Return an empty list or handle the error response appropriately
+
 @app.route("/")
 def index():
     # Connect to the database
