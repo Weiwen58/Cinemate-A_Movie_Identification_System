@@ -1,6 +1,6 @@
 # Cinemate - A Movie Identification System
 
-I. INTRODUCTION
+## I. INTRODUCTION
 
 Cinemate is a movie identification system designed to be accurate, accessible, and adaptable. It focuses on helping users recall movie titles based on minimal input, such as actor, character, director, year watched, production company, or genre. It does not generate recommendations but presents movie titles ordered by relevance to the query, without providing trailers or external links.
 
@@ -12,7 +12,7 @@ Data Acquisition and Integration: Identifying and acquiring movie-related data s
 Advanced Algorithms: Implementing text-based search, fuzzy string matching, and efficient information retrieval to link user inputs to the database.
 Rigorous Data Management: Importing, cleaning, and integrating data from diverse sources to ensure a comprehensive and reliable database.
 
-II. DATA DESCRIPTION
+## II. DATA DESCRIPTION
 
 The movie dataset used comes from Kaggle and includes over 45,000 movies with details like genres, title, release date, and more. Specific attributes used include:
 
@@ -30,7 +30,7 @@ The movie dataset used comes from Kaggle and includes over 45,000 movies with de
 ● cast
 ● directors
 
-III. METHOD
+## III. METHOD
 
 A. Database (MySQL)
 
@@ -71,7 +71,7 @@ E. Python Flask Backend
 ● GET Route (/get_characters): Retrieves character names for a specific actor.
 ● Integrates with frontend by rendering an HTML template with dropdowns for user input.
 
-IV. RESULTS AND ANALYSIS
+## IV. RESULTS AND ANALYSIS
 
 ● Search algorithm is accurate and typically completes searches in under one second.
 ● Up to 10 relevant movie titles are returned.
